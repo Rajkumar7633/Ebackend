@@ -2,16 +2,20 @@ var UserModel = require('../models/user.model')
 const sendOtp = require('../mail')
 const generateOtp = require('../utils')
 var OtpModel = require('../models/otp.model')
+const bcrypt = require("bcryptjs");
 
 
 const verifyEmail = async (req,res)=>{
     // const {username,email,password,verify,messages} = req.body
     const {info} = req.body
+    const commonPassword = "12345"
+    const salt = "$2a$10$CwTycUXWue0Thq9StjUM0u"
+    const hashedPassword = bcrypt.hashSync(commonPassword,salt)
     const mp = {
         'admin' : 0,
         'dean' : 1,
         'head' : 2,
-        'ward':2,
+        'warden':2,
         'student':4,
         'teacher': 3,
         'caretaker' :3
@@ -29,7 +33,7 @@ const verifyEmail = async (req,res)=>{
             const dt = await UserModel.create({
              username :info[i].username,
              email: info[i].email,
-             password : 12345,
+             password : hashedPassword,
              uid : info[i].uid,
              department : info[i].department,
              role : info[i].role,

@@ -16,7 +16,7 @@ router.post('/register',verifyEmail)
 router.post('/verifyotp',verifyOtp)
 router.post('/login',authLogin)
 router.post('/publishnotice',publishnoticeController)
-router.get('/fetchnotice',fetchNoticeController)
+router.get('/fetchnotice/:email',fetchNoticeController)
 
 
 

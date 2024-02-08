@@ -25,7 +25,7 @@ const userModel = new Schema({
     },
     role : {
         type : String,
-        enum : ['admin','dean','head','ward','student','teacher','caretaker']
+        enum : ['admin','dean','head','warden','student','teacher','caretaker']
     },
     userlevel :{
         type: Number

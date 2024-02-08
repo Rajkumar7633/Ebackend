@@ -1,22 +1,35 @@
 const UserModel = require('../models/user.model')
 const NoticeModel = require('../models/imageNotice.model')
 const fetchNoticeController = async (req,res) =>{
-   const { email } = req.body
-   
-   const user = await UserModel.findOne({email: email})
+//    const { email } = req.body
+     const email = req.params.email
+   let user
+   try{
+    user = await UserModel.findOne({email: email})
+    }
+   catch(err){
+    return res.status(400).send({error : err.message})
+   }
+   if(!user){
+    return res.status(400).send({error : err.message})
+   }
+
     try{
-        console.log(user);
-        console.log(email);
-        console.log(user.department);
-        console.log(user.userlevel);
+        if(user.department === 'admin'){
+            const adminNt = await NoticeModel.find({})
+            return res.status(200).json(adminNt)
+        }
         const nt = await NoticeModel.find({
     $and:[
-        {department : user.department},
+        {   $or:[
+                {department : "all"},
+                {department : user.department}
+            ]
+        },
         {
-        level : 
-        {
-            $gte : user.userlevel
-        }
+            level : {
+                $gte : user.userlevel
+            }
         }
     ]
    })

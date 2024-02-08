@@ -7,20 +7,25 @@ const authLogin = async(req,res)=>{
     console.log("--->" + password)
     const hashedPassword = bcrypt.hashSync(password,salt)
     console.log("New--->" + hashedPassword)
-    const user = await UserModel.findOne({email:email})
-    
+    let user
+    try{
+         user = await UserModel.findOne({email:email})
+    }
+    catch(err){
+        return res.status(400).send({error : err.message})
+    }
     if(!user){
-        res.send({err:"No Such User"})
+        return res.send({error:"No Such User"})
     }
     else if(user.password !== hashedPassword ){
-        res.send({err : "Incorrect Password"})
+        return res.send({error : "Incorrect Password"})
         
     }
     else if(user.password === hashedPassword){
-        res.send({success : "Logged in"})
+        return res.send({success : "Logged in",email : user.email})
     }
     else{
-        res.send({err : "Internal Server Error"})
+        return res.send({error : "Internal Server Error"})
     }
 
 }
