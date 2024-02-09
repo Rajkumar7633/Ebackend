@@ -5,7 +5,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
-const ImageModel = require('./models/imageNotice.model')
+const Notices = require('./models/imageNotice.model')
 
 
 const app = express()
@@ -43,7 +43,20 @@ const storage = multer.diskStorage({
     },
   });
   const upload = multer({ storage: storage });
-app.post("/uploadPhoto", upload.single("myImage"),async (req, res) => {
+app.post("/uploadPhoto", upload.single("myNoticeImage"),async (req, res) => {
+  const {department,level,note,heading,from,fromdepartment} = req.body
+  department = department.toLowerCase()
+  levelmap = {
+    'dean' : 1,
+    'head' : 2,
+    'warden':2,
+    'teacher': 3,
+    'caretaker' :3,
+    'student':4
+  }
+  level = level.toLowerCase()
+  level = levelmap[level]
+  fromdepartment = fromdepartment.toLowerCase()
   const obj = {
     img: {
       data: fs.readFileSync(
@@ -54,7 +67,15 @@ app.post("/uploadPhoto", upload.single("myImage"),async (req, res) => {
   };
   console.log(obj);
  try{ 
-    const datimg = await ImageModel.create({image:obj.img})
+    const datimg = await Notices.create({
+      department : department,
+      level : level,
+      note : note,
+      heading : heading,
+      from : from,
+      fromdepartment : fromdepartment,
+      image:obj.img
+    })
     res.json(datimg)
 }
  catch(error){

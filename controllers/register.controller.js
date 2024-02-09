@@ -16,16 +16,17 @@ const verifyEmail = async (req,res)=>{
         'dean' : 1,
         'head' : 2,
         'warden':2,
-        'student':4,
         'teacher': 3,
-        'caretaker' :3
+        'caretaker' :3,
+        'student':4
     }
     for(var i = 0; i<info.length;i++){
         try{
            var alreadyExistedMail = await UserModel.findOne({email:info[i].email})
            if(alreadyExistedMail){
-               console.log("Already Existed Mail");
+               console.log("Already Existed Mail---->");
                console.log(info[i].email);
+               console.log("");
            }
            else{
             var rl = info[i].role;
@@ -35,7 +36,7 @@ const verifyEmail = async (req,res)=>{
              email: info[i].email,
              password : hashedPassword,
              uid : info[i].uid,
-             department : info[i].department,
+             department : info[i].department.toLowerCase(),
              role : info[i].role,
              userlevel : ulevel
             })
