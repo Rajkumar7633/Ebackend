@@ -13,8 +13,9 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(express.static('static'))
 const connectDB = ()=>{
-    mongoose.connect("mongodb+srv://ritikrajcoder:519sO7niceZ0ltox@cluster0.qclenjk.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+    mongoose.connect("mongodb://localhost:27017/nms").then(()=>{
         console.log("Connected Db");
         app.listen(80,()=>{
             console.log("http://localhost:80/");
@@ -22,8 +23,24 @@ const connectDB = ()=>{
     }).catch((err)=>{
         console.log(err);
     })
+    // mongoose.connect("mongodb+srv://ritikrajcoder:519sO7niceZ0ltox@cluster0.qclenjk.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+    //     console.log("Connected Db");
+    //     app.listen(80,()=>{
+    //         console.log("http://localhost:80/");
+    //     })
+    // }).catch((err)=>{
+    //     console.log(err);
+    // })
 }
+// app.use(bodyParser.json({limit: '1005mb'}));
 
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true,
+//     limit: '75mb',
+//     parameterLimit: 50000000,
+//   }),
+// );
 
 app.get('/',function (req,res){
 res.send("<h1>Hello</h1>")
@@ -45,7 +62,13 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage });
 app.post("/uploadPhoto", upload.single("myNoticeImage"),async (req, res) => {
   const {department,level,note,heading,from,fromdepartment} = req.body
-  department = department.toLowerCase()
+  const date = new Date().toLocaleDateString('en-US', 
+{day: "numeric",
+month: "short",
+year:"numeric"})
+const time =  new Date().toLocaleTimeString('en-US', 
+{ hour12: true, hour: "numeric", minute: "numeric"});
+  // department = department.toLowerCase()
   levelmap = {
     'dean' : 1,
     'head' : 2,
@@ -54,9 +77,9 @@ app.post("/uploadPhoto", upload.single("myNoticeImage"),async (req, res) => {
     'caretaker' :3,
     'student':4
   }
-  level = level.toLowerCase()
-  level = levelmap[level]
-  fromdepartment = fromdepartment.toLowerCase()
+  // level = level.toLowerCase()
+  // level = levelmap[level]
+  // fromdepartment = fromdepartment.toLowerCase()
   const obj = {
     img: {
       data: fs.readFileSync(
@@ -68,6 +91,8 @@ app.post("/uploadPhoto", upload.single("myNoticeImage"),async (req, res) => {
   console.log(obj);
  try{ 
     const datimg = await Notices.create({
+      time : time,
+      date : date,
       department : department,
       level : level,
       note : note,
@@ -89,5 +114,7 @@ app.post("/uploadPhoto", upload.single("myNoticeImage"),async (req, res) => {
 //     err ? console.log(err) : res.redirect("/");
 //   });
 });
+
 app.use('/api',require("./routers/register.router"))
+app.use('/notice',require("./routers/notice.router"))
 connectDB()
