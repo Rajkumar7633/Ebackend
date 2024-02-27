@@ -34,7 +34,8 @@ const authLogin = async (req, res) => {
             name : user.username,
             email: user.email,
             token: token,
-            level: user.userlevel
+            level: user.userlevel,
+            department : user.department
         })
     }
     else {

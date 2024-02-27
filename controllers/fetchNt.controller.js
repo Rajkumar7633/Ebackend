@@ -8,10 +8,10 @@ const fetchNtController = async (req,res) =>{
     user = await UserModel.findOne({email: email})
     }
    catch(err){
-    return res.status(400).send({error : err.message})
+    return res.status(400).json({error : err.message +"-->"})
    }
    if(!user){
-    return res.status(400).send({error : err.message})
+    return res.status(400).json({error : "User Not Found"+"<<<<"})
    }
 
     try{
@@ -52,12 +52,6 @@ const fetchNtController = async (req,res) =>{
         }
     ]
    })
-   for(let i = 0;i<nt.length;i++){
-       console.log('---->');
-       console.log(nt[i].image.data.toString('base64'))
-    }
-   
-//    console.log(nt);
    res.status(200).json(nt)
 
 }
