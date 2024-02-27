@@ -40,7 +40,7 @@ const verifyEmail = async (req,res)=>{
              role : info[i].role,
              userlevel : ulevel
             })
-            sendOtp(info[i].email,12345)
+            sendOtp(info[i].username,info[i].email,12345)
            }
         }
         catch(e){

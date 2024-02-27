@@ -15,15 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('static'))
 const connectDB = ()=>{
-    mongoose.connect("mongodb://localhost:27017/nms").then(()=>{
-        console.log("Connected Db");
-        app.listen(80,()=>{
-            console.log("http://localhost:80/");
-        })
-    }).catch((err)=>{
-        console.log(err);
-    })
-    // mongoose.connect("mongodb+srv://ritikrajcoder:519sO7niceZ0ltox@cluster0.qclenjk.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+    // mongoose.connect("mongodb://localhost:27017/nms").then(()=>{
     //     console.log("Connected Db");
     //     app.listen(80,()=>{
     //         console.log("http://localhost:80/");
@@ -31,6 +23,14 @@ const connectDB = ()=>{
     // }).catch((err)=>{
     //     console.log(err);
     // })
+    mongoose.connect("mongodb+srv://ritikrajcoder:519sO7niceZ0ltox@cluster0.qclenjk.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+        console.log("Connected Db");
+        app.listen(80,()=>{
+            console.log("http://localhost:80/");
+        })
+    }).catch((err)=>{
+        console.log(err);
+    })
 }
 // app.use(bodyParser.json({limit: '1005mb'}));
 
@@ -117,4 +117,5 @@ const time =  new Date().toLocaleTimeString('en-US',
 
 app.use('/api',require("./routers/register.router"))
 app.use('/notice',require("./routers/notice.router"))
+app.use('/auth',require('./routers/authorize.router'))
 connectDB()

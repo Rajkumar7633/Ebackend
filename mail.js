@@ -11,13 +11,14 @@ var transporter = nodemailer.createTransport({
     pass: 'gkbdvuzezkbhqlqd'
   }
 });
- const sendOtp = (email,otp)=>{
+ const sendOtp = (username="user",email,password)=>{
 
   var mailOptions = {
     from: 'ritikrajcoder@gmail.com',
     to: email,
-    subject: 'Default Password for E-Suchana ',
-    text: `Your default password is ${otp}`
+    subject: 'Welcome to E-Suchana ',
+    // text: `Your default password is ${password}`
+    html : `<h1>Hello ${username}</h1><h2>Your Default Password is ${password}</h2>`
   };
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
