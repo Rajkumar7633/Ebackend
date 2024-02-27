@@ -6,6 +6,8 @@ const path = require("path");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const Notices = require('./models/imageNotice.model')
+require('dotenv').config()
+
 
 
 const app = express()
@@ -23,7 +25,7 @@ const connectDB = ()=>{
     // }).catch((err)=>{
     //     console.log(err);
     // })
-    mongoose.connect("mongodb+srv://ritikrajcoder:519sO7niceZ0ltox@cluster0.qclenjk.mongodb.net/?retryWrites=true&w=majority").then(()=>{
+    mongoose.connect(process.env.DB_URL).then(()=>{
         console.log("Connected Db");
         app.listen(80,()=>{
             console.log("http://localhost:80/");
