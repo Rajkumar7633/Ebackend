@@ -34,18 +34,33 @@ const connectDB = ()=>{
         console.log(err);
     })
 }
-mongoose.set('strictQuery', false);
-mongoose.connect(process.env.DB_URL,{useNewUrlParser: true})
-  .then(() => {
-    console.log('connected to database')
-    // listen to port
-    app.listen(80, () => {
-      console.log('listening for requests on port', process.env.PORT)
-    })
+// mongoose.set('strictQuery', false);
+// mongoose.connect(process.env.DB_URL,{useNewUrlParser: true})
+//   .then(() => {
+//     console.log('connected to database')
+//     // listen to port
+//     app.listen(80, () => {
+//       console.log('listening for requests on port', process.env.PORT)
+//     })
+//   })
+//   .catch((err) => {
+//     console.log(err)
+//   })  
+const connectDBMONGO = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DB_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+const PORT = process.env.PORT || 3000
+connectDBMONGO().then(() => {
+  app.listen(PORT, () => {
+      console.log("listening for requests");
   })
-  .catch((err) => {
-    console.log(err)
-  })  
+})
 // app.use(bodyParser.json({limit: '1005mb'}));
 
 // app.use(
