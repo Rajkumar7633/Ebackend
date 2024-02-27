@@ -34,6 +34,18 @@ const connectDB = ()=>{
         console.log(err);
     })
 }
+mongoose.set('strictQuery', false);
+mongoose.connect(process.env.DB_URL,{useNewUrlParser: true})
+  .then(() => {
+    console.log('connected to database')
+    // listen to port
+    app.listen(process.env.PORT, () => {
+      console.log('listening for requests on port', process.env.PORT)
+    })
+  })
+  .catch((err) => {
+    console.log(err)
+  })  
 // app.use(bodyParser.json({limit: '1005mb'}));
 
 // app.use(
@@ -120,4 +132,4 @@ const time =  new Date().toLocaleTimeString('en-US',
 app.use('/api',require("./routers/register.router"))
 app.use('/notice',require("./routers/notice.router"))
 app.use('/auth',require('./routers/authorize.router'))
-connectDB()
+// connectDB()
