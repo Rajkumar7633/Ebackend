@@ -25,9 +25,9 @@ const connectDB = ()=>{
     // }).catch((err)=>{
     //     console.log(err);
     // })
-    mongoose.connect(process.env.DB_URL).then(()=>{
+    mongoose.connect(process.env.DB_URL,{useNewUrlParser: true}).then(()=>{
         console.log("Connected Db");
-        app.listen(80,()=>{
+        app.listen(process.env,PORT,()=>{
             console.log("http://localhost:80/");
         })
     }).catch((err)=>{
