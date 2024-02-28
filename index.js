@@ -62,7 +62,7 @@ connectDBMONGO().then(() => {
   //     console.log("listening for requests");
   // })
     try {
-    app.listen(80).on('error', (err) => {
+    app.listen(3000).on('error', (err) => {
         console.log('ERROR: ' + err)
         console.log('Exiting...')
     })
