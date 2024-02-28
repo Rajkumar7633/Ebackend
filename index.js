@@ -9,7 +9,7 @@ const Notices = require('./models/imageNotice.model')
 require('dotenv').config()
 
 
-
+const PORT = process.env.PORT || 3000
 const app = express()
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -55,12 +55,16 @@ const connectDBMONGO = async () => {
     process.exit(1);
   }
 }
-const PORT = process.env.PORT || 3000
+
 connectDBMONGO().then(() => {
+    console.log("--------------->")
+  // app.listen(PORT, () => {
+  //     console.log("listening for requests");
+  // })
+})
   app.listen(PORT, () => {
       console.log("listening for requests");
   })
-})
 // app.use(bodyParser.json({limit: '1005mb'}));
 
 // app.use(
