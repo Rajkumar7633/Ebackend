@@ -58,13 +58,23 @@ const connectDBMONGO = async () => {
 
 connectDBMONGO().then(() => {
     console.log("--------------->")
+  // app.listen(4000, () => {
+  //     console.log("listening for requests");
+  // })
+    try {
+    app.listen(3000).on('error', (err) => {
+        console.log('ERROR: ' + err)
+        console.log('Exiting...')
+    })
+    console.log('Listening on port ' + port)
+} catch (err) {
+    console.log('ERROR: ' + err)
+    console.log('Exiting...')
+}
+})
   // app.listen(PORT, () => {
   //     console.log("listening for requests");
   // })
-})
-  app.listen(PORT, () => {
-      console.log("listening for requests");
-  })
 // app.use(bodyParser.json({limit: '1005mb'}));
 
 // app.use(
