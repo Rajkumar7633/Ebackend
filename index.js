@@ -86,7 +86,8 @@ connectDBMONGO().then(() => {
 // );
 
 app.get('/',function (req,res){
-res.send("<h1>Hello</h1>")
+// res.send("<h1>Hello</h1>")
+    res.status(200).send("Hello I'm Server")
 })
 app.get('/img',function(req,res){
 res.sendFile(__dirname+"/img.html")
