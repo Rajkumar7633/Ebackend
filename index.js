@@ -15,7 +15,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(express.static('static'))
+app.use(express.static('tmp'))
 const connectDB = ()=>{
     // mongoose.connect("mongodb://localhost:27017/nms").then(()=>{
     //     console.log("Connected Db");
