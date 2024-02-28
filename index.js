@@ -66,7 +66,7 @@ connectDBMONGO().then(() => {
         console.log('ERROR: ' + err)
         console.log('Exiting...')
     })
-    console.log('Listening on port ' + port)
+    console.log('Listening on port ' + 3000)
 } catch (err) {
     console.log('ERROR: ' + err)
     console.log('Exiting...')
