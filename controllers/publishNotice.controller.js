@@ -4,6 +4,7 @@ const express = require('express')
 
 
 const publishnoticeController = async( req,res)=>{
+    console.log("Came--->");
     const user_email = req.user_email
     const user_level = req.user_level
     if(user_level >2){
