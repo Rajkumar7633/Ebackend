@@ -62,7 +62,7 @@ connectDBMONGO().then(() => {
   //     console.log("listening for requests");
   // })
     try {
-    app.listen(3000).on('error', (err) => {
+    app.listen(10000).on('error', (err) => {
         console.log('ERROR: ' + err)
         console.log('Exiting...')
     })
@@ -86,8 +86,8 @@ connectDBMONGO().then(() => {
 // );
 
 app.get('/',function (req,res){
-// res.send("<h1>Hello</h1>")
-    res.status(200).send("Hello I'm Server")
+    res.status(200);
+    res.send("This is from root");
 })
 app.get('/img',function(req,res){
 res.sendFile(__dirname+"/img.html")
