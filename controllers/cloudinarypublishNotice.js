@@ -1,5 +1,6 @@
 const NmsNotices = require("../models/notice.model")
 const express = require('express')
+const { v4: uuidv4 } = require('uuid');
 
 const cloudinary = require('cloudinary').v2;
 
@@ -32,8 +33,9 @@ const cloudinarypublishnoticeController = async (req, res) => {
     console.log(req.file.filename)
     console.log(req.file.path);
     console.log(__dirname+"/tmp/"+req.file.filename);
+    console.log(req.file.originalname);
     try {
-        const result = await cloudinary.uploader.upload(req.file.path);
+        const result = await cloudinary.uploader.upload(req.file.originalname);
         console.log(result);
         const imageUrl = result.secure_url;
         const data = await NmsNotices.create({
