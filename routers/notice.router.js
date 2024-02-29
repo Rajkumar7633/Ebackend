@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
       );
     },
   });
-  const storage1 = multer.memoryStorage({})
+  const storage1 = multer.memoryStorage()
   const upload = multer({ storage: storage });
   const upload1 = multer({ storage: storage1 });
 
