@@ -1,9 +1,11 @@
 const NmsNotices = require("../models/notice.model")
 const express = require('express')
 const { v4: uuidv4 } = require('uuid');
+const path = require("path");
 
 const cloudinary = require('cloudinary').v2;
-const dUri = require('datauri')
+const Datauri = require('datauri')
+const DatauriParser = require("datauri/parser");
 
 const app = express();
 
@@ -33,13 +35,24 @@ const cloudinarypublishnoticeController = async (req, res) => {
         { hour12: true, hour: "numeric", minute: "numeric" });
     console.log(req.file.filename)
     console.log(req.file.path);
-    console.log(__dirname+"/tmp/"+req.file.filename);
+    console.log(__dirname + "/tmp/" + req.file.filename);
     console.log(req.file.originalname);
-    const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
-
+    
     try {
-        const file = dataUri(req).content;
-        const result = await cloudinary.uploader.upload(file);
+        // const dUri = new Datauri();
+        // const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+        // const parser = new DatauriParser();
+        // const file1 = parser.format(
+        //     path.extname(req.file.originalname).toString(),
+        //     req.file.buffer
+        // ).content;
+        // const file = dataUri(req).content;
+        // console.log(file1)
+        const b64 = Buffer.from(req.file.buffer).toString("base64");
+        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+        const result = await cloudinary.uploader.upload(dataURI,{
+            resource_type: "auto",
+          });
         console.log(result);
         const imageUrl = result.secure_url;
         const data = await NmsNotices.create({
