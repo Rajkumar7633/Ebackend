@@ -5,6 +5,7 @@ const path = require("path");
 var router = express.Router()
 const { v4: uuidv4 } = require('uuid');
 const jwtAuthorization = require('../controllers/jwtauthorization.controller');
+const cloudinarypublishnoticeController = require('../controllers/cloudinarypublishNotice');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -20,5 +21,6 @@ const storage = multer.diskStorage({
   const upload = multer({ storage: storage });
 
 router.post("/publish-notice",jwtAuthorization,upload.single('image'),publishnoticeController)
+router.post("/publish",upload.single('image'),cloudinarypublishnoticeController)
 router.post("/publish-notice-only",jwtAuthorization,publishnoticeonlyController)
 module.exports = router;
