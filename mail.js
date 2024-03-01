@@ -31,20 +31,24 @@ var transporter = nodemailer.createTransport({
 }
  const sendNotice = (username="user",email,note,heading)=>{
   console.log(email + username + note + heading)
-  var mailOptions = {
-    from: 'ritikrajcoder@gmail.com',
-    to: email,
-    subject: 'E-Suchana Notice: '+heading,
-    // text: `Your default password is ${password}`
-    html : `<h1>Hello ${username}</h1><h3>${note}</h3>`
-  };
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log("--->"+error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
+  return new Promise((resolve,reject)=>{
+    var mailOptions = {
+      from: 'ritikrajcoder@gmail.com',
+      to: email,
+      subject: 'E-Suchana Notice: '+heading,
+      // text: `Your default password is ${password}`
+      html : `<h1>Hello ${username}</h1><h3>${note}</h3>`
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log("--->"+error);
+        reject({error : error})
+      } else {
+        console.log('Email sent: ' + info.response);
+        resolve("Mail Sent to" + email)
+      }
+    });
+  })
 }
 
 module.exports = {sendOtp,sendNotice}
