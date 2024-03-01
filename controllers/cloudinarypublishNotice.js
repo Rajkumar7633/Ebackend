@@ -1,4 +1,5 @@
 const NmsNotices = require("../models/notice.model")
+const UserModel = require("../models/user.model")
 const express = require('express')
 const { v4: uuidv4 } = require('uuid');
 const path = require("path");
@@ -18,13 +19,13 @@ cloudinary.config({
 
 const cloudinarypublishnoticeController = async (req, res) => {
     console.log("Came--->");
-    // const user_email = req.user_email
-    // const user_level = req.user_level
-    // if (user_level > 2) {
-    //     return res.json({
-    //         error: "Cannot publish notice"
-    //     })
-    // }
+    const user_email = req.user_email
+    const user_level = req.user_level
+    if (user_level > 2) {
+        return res.json({
+            error: "Cannot publish notice"
+        })
+    }
     const { image, level, department, note, heading } = req.body
     const date = new Date().toLocaleDateString('en-US', {
         day: "numeric",
@@ -37,8 +38,8 @@ const cloudinarypublishnoticeController = async (req, res) => {
     console.log(req.file.path);
     console.log(__dirname + "/tmp/" + req.file.filename);
     console.log(req.file.originalname);
-    
     try {
+        const user = await UserModel.findOne({email:user_email})
         // const dUri = new Datauri();
         // const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
         // const parser = new DatauriParser();
@@ -62,7 +63,9 @@ const cloudinarypublishnoticeController = async (req, res) => {
             department: department,
             image: imageUrl,
             note: note,
-            heading: heading
+            heading: heading,
+            from : user.name + user_email,
+            fromdepartment : user.department
         })
         return res.json({
             success: "done"
