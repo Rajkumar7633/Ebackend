@@ -30,7 +30,7 @@ var transporter = nodemailer.createTransport({
   });
 }
  const sendNotice = (username="user",email,note,heading)=>{
-
+  console.log(email + username + note + heading)
   var mailOptions = {
     from: 'ritikrajcoder@gmail.com',
     to: email,

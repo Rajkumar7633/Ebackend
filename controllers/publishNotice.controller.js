@@ -1,6 +1,7 @@
 const NmsNotices = require("../models/notice.model")
 const express = require('express');
 const userModel = require("../models/user.model");
+const { sendNotice } = require("../mail");
 
 
 
