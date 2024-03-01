@@ -29,5 +29,22 @@ var transporter = nodemailer.createTransport({
     }
   });
 }
+ const sendNotice = (username="user",email,note,heading)=>{
 
-module.exports = sendOtp
+  var mailOptions = {
+    from: 'ritikrajcoder@gmail.com',
+    to: email,
+    subject: 'E-Suchana Notice: '+heading,
+    // text: `Your default password is ${password}`
+    html : `<h1>Hello ${username}</h1><h3>${note}</h3>`
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log("--->"+error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+module.exports = {sendOtp,sendNotice}

@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
 const storage1 = multer.memoryStorage()
 const upload = multer({ storage: storage });
 const upload1 = multer({ storage: storage1 });
-router.post("/publish-notice", jwtAuthorization, upload.single('image'), publishnoticeController)
+// router.post("/publish-notice", jwtAuthorization, upload.single('image'), publishnoticeController)
 router.post("/publish", jwtAuthorization, upload1.single('image'), cloudinarypublishnoticeController)
 router.post("/publish-notice-only", jwtAuthorization, publishnoticeonlyController)
 module.exports = router;

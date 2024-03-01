@@ -1,20 +1,21 @@
 const NmsNotices = require("../models/notice.model")
 const UserModel = require("../models/user.model")
-const express = require('express')
+// const express = require('express')
 const { v4: uuidv4 } = require('uuid');
 const path = require("path");
 
 const cloudinary = require('cloudinary').v2;
 const Datauri = require('datauri')
 const DatauriParser = require("datauri/parser");
-
-const app = express();
+const { sendNotice } = require("../mail");
+require('dotenv').config()
+// const app = express();
 
 // Configure Cloudinary
 cloudinary.config({
-    cloud_name: 'dic8en2vt',
-    api_key: '132673531259988',
-    api_secret: 'IxqbCZ3oEwH9KvYcpZFPqBIegxI'
+    cloud_name: process.env.CLOULD_NAME,
+    api_key: process.env.CLOULD_KEY,
+    api_secret: process.env.CLOULD_SECRET
 });
 
 const cloudinarypublishnoticeController = async (req, res) => {
@@ -64,13 +65,30 @@ const cloudinarypublishnoticeController = async (req, res) => {
             image: imageUrl,
             note: note,
             heading: heading,
-            from : user.name + user_email,
+            from : user.username+" (" + user_email+")",
             fromdepartment : user.department
         })
-        return res.json({
+        const usersToEmail = await UserModel.find(
+            {
+                $and:[
+                    {   $or:[
+                            {department : "admin"},
+                            {department : department}
+                        ]
+                    },
+                    {
+                        userlevel : {
+                            $lte : level
+                        }
+                    }
+                ]
+            }
+        )
+        usersToEmail.map(u=>{
+            sendNotice(u.username,u.email,note,heading)
+        })
+         res.json({
             success: "done"
-            // image : imageUrl
-
         })
     }
     catch (err) {

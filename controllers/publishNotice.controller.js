@@ -3,16 +3,16 @@ const express = require('express')
 
 
 
-const publishnoticeController = async( req,res)=>{
+const publishnoticeController = async (req, res) => {
     console.log("Came--->");
     const user_email = req.user_email
     const user_level = req.user_level
-    if(user_level >2){
+    if (user_level > 2) {
         return res.json({
-            error : "Cannot publish notice"
+            error: "Cannot publish notice"
         })
     }
-    const {image,level,department,note,heading} = req.body
+    const { image, level, department, note, heading } = req.body
     const date = new Date().toLocaleDateString('en-US', {
         day: "numeric",
         month: "short",
@@ -20,36 +20,37 @@ const publishnoticeController = async( req,res)=>{
     })
     const time = new Date().toLocaleTimeString('en-US',
         { hour12: true, hour: "numeric", minute: "numeric" });
-        console.log(req.file.filename)
-    try{const  data = await NmsNotices.create({
-        time:time,
-        date : date,
-        level : level,
-        department : department,
-        image : ( req.file.filename),
-        note : note,
-        heading : heading
-    })
-    return res.json({
-        success : "done"
-    })
-}
-    catch(err){
+    console.log(req.file.filename)
+    try {
+        const data = await NmsNotices.create({
+            time: time,
+            date: date,
+            level: level,
+            department: department,
+            image: (req.file.filename),
+            note: note,
+            heading: heading
+        })
         return res.json({
-            error : err.message + "--------->"
+            success: "done"
+        })
+    }
+    catch (err) {
+        return res.json({
+            error: err.message + "--------->"
         })
     }
 
 }
-const publishnoticeonlyController = async(req,res)=>{
+const publishnoticeonlyController = async (req, res) => {
     const user_email = req.user_email
     const user_level = req.user_level
-    if(user_level >2){
+    if (user_level > 2) {
         return res.json({
-            error : "Cannot publish notice"
+            error: "Cannot publish notice"
         })
     }
-    const {image,level,department,note,heading} = req.body
+    const { image, level, department, note, heading } = req.body
     const date = new Date().toLocaleDateString('en-US', {
         day: "numeric",
         month: "short",
@@ -57,25 +58,48 @@ const publishnoticeonlyController = async(req,res)=>{
     })
     const time = new Date().toLocaleTimeString('en-US',
         { hour12: true, hour: "numeric", minute: "numeric" });
-    try{const  data = await NmsNotices.create({
-        time:time,
-        date : date,
-        level : level,
-        department : department,
-        image : null,
-        note : note,
-        heading : heading
-    })
-    return res.json({
-        success : "Done :-)"
-    })
-}
-    catch(err){
+    try {
+        const data = await NmsNotices.create({
+            time: time,
+            date: date,
+            level: level,
+            department: department,
+            image: null,
+            note: note,
+            heading: heading,
+            from : user.username+" (" + user_email+")",
+            fromdepartment : user.department
+        })
+        const usersToEmail = await UserModel.find(
+            {
+                $and: [
+                    {
+                        $or: [
+                            { department: "admin" },
+                            { department: department }
+                        ]
+                    },
+                    {
+                        userlevel: {
+                            $lte: level
+                        }
+                    }
+                ]
+            }
+        )
+        usersToEmail.map(u => {
+            sendNotice(u.username, u.email, note, heading)
+        })
+        res.json({
+            success: "done"
+        })
+    }
+    catch (err) {
         return res.json({
-            error : err.message
+            error: err.message
         })
     }
 
 }
 
-module.exports =  {publishnoticeController,publishnoticeonlyController};
+module.exports = { publishnoticeController, publishnoticeonlyController };

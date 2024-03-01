@@ -15,9 +15,9 @@ const router = express.Router();
 
 
 router.post('/register',verifyEmail)
-router.post('/verifyotp',verifyOtp)
+// router.post('/verifyotp',verifyOtp)
 router.post('/login',authLogin)
-router.post('/publishnotice',publishnoticeController)
+// router.post('/publishnotice',publishnoticeController)
 router.get('/fetchnotice/:email',jwtAuthorization,fetchNtController)
 // router.get('/fetchnotice/:email',fetchNoticeController)
 
