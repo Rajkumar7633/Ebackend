@@ -85,15 +85,16 @@ const cloudinarypublishnoticeController = async (req, res) => {
             }
         )
         console.log(usersToEmail);
-        usersToEmail.map(async u=>{
-            const a  = await sendNotice(u.username,u.email,note,heading)
+        Promise.all(usersToEmail.map(async u=>{
+            const a  =  sendNotice(u.username,u.email,note,heading)
             console.log("a=");
             console.log(a);
             return""
-        })
-         res.json({
-            success: "done"
-        })
+        })).then(
+            res.json({
+               success: "done"
+           })
+        )
     }
     catch (err) {
         return res.json({

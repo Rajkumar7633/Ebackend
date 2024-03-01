@@ -90,12 +90,16 @@ const publishnoticeonlyController = async (req, res) => {
             }
         )
         console.log(usersToEmail);
-        usersToEmail.map(u => {
-            sendNotice(u.username, u.email, note, heading)
-        })
-        res.json({
-            success: "done"
-        })
+        Promise.all(usersToEmail.map(async u=>{
+            const a  =  sendNotice(u.username,u.email,note,heading)
+            console.log("a=");
+            console.log(a);
+            return""
+        })).then(
+            res.json({
+               success: "done"
+           })
+        )
     }
     catch (err) {
         return res.json({
