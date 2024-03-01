@@ -55,7 +55,7 @@ const cloudinarypublishnoticeController = async (req, res) => {
         const result = await cloudinary.uploader.upload(dataURI,{
             resource_type: "auto",
           });
-        console.log(result);
+        console.log(result.url);
         const imageUrl = result.secure_url;
         const data = await NmsNotices.create({
             time: time,
@@ -84,6 +84,7 @@ const cloudinarypublishnoticeController = async (req, res) => {
                 ]
             }
         )
+        console.log(usersToEmail);
         usersToEmail.map(u=>{
             sendNotice(u.username,u.email,note,heading)
         })

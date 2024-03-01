@@ -1,5 +1,6 @@
 const NmsNotices = require("../models/notice.model")
-const express = require('express')
+const express = require('express');
+const userModel = require("../models/user.model");
 
 
 
@@ -70,7 +71,7 @@ const publishnoticeonlyController = async (req, res) => {
             from : user.username+" (" + user_email+")",
             fromdepartment : user.department
         })
-        const usersToEmail = await UserModel.find(
+        const usersToEmail = await userModel.find(
             {
                 $and: [
                     {
@@ -87,6 +88,7 @@ const publishnoticeonlyController = async (req, res) => {
                 ]
             }
         )
+        console.log(usersToEmail);
         usersToEmail.map(u => {
             sendNotice(u.username, u.email, note, heading)
         })
