@@ -31,7 +31,7 @@ var transporter = nodemailer.createTransport({
 }
  const sendNotice = (username="user",email,note,heading)=>{
   console.log(email + username + note + heading)
-  // return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
     var mailOptions = {
       from: 'ritikrajcoder@gmail.com',
       to: email,
@@ -42,13 +42,13 @@ var transporter = nodemailer.createTransport({
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
         console.log("--->"+error);
-        // reject({error : error})
+        reject(false)
       } else {
         console.log('Email sent: ' + info.response);
-        // resolve("Mail Sent to" + email)
+        resolve(true)
       }
     });
-  // })
+  })
 }
 
 module.exports = {sendOtp,sendNotice}
