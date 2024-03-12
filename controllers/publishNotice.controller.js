@@ -61,6 +61,7 @@ const publishnoticeonlyController = async (req, res) => {
     const time = new Date().toLocaleTimeString('en-US',
         { hour12: true, hour: "numeric", minute: "numeric" });
     try {
+        const user = await userModel.findOne({email:user_email})
         const data = await NmsNotices.create({
             time: time,
             date: date,
@@ -90,6 +91,10 @@ const publishnoticeonlyController = async (req, res) => {
             }
         )
         console.log(usersToEmail);
+        promisesmail = usersToEmail.map(async u=>{
+            const a = await sendNotice(u.username,u.email,note,heading)
+            return a;
+        })
         Promise.all(
             usersToEmail.map(async u=>{
             const a  =  await sendNotice(u.username,u.email,note,heading)
