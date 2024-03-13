@@ -29,7 +29,7 @@ const authLogin = async (req, res) => {
             email: user.email,
             level: user.userlevel
         }, process.env.JWT_KEY, {
-            expiresIn: "3m"
+            expiresIn: "20m"
         })
         return res.send({
             success: "Logged in",
