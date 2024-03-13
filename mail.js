@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASS
   }
 });
-export const sendNotice = (username="user",email,note,heading)=>{
+sendNotice = (username="user",email,note,heading)=>{
   console.log(email + username + note + heading)
   return new Promise((resolve,reject)=>{
     var mailOptions = {
@@ -34,4 +34,4 @@ export const sendNotice = (username="user",email,note,heading)=>{
   })
 }
 
-// module.exports = {sendOtp,sendNotice}
+module.exports = {sendNotice}
