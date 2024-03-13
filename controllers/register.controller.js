@@ -42,6 +42,7 @@ const verifyEmail = async (req,res)=>{
              userlevel : ulevel
             })
            var a = await sendOtp(info[i].username,info[i].email,12345)
+           console.log(a);
            prom.push(a)
            }
         }
@@ -51,7 +52,7 @@ const verifyEmail = async (req,res)=>{
     }
     catch(e){
         console.log(e);
-        res.status(400).json({error : "Done :-)"})
+        res.status(400).json({error : e.message})
     }
      return res.status(200).json({success : "Done :-)"})
     // try{
