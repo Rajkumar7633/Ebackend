@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport({
   }
 });
   const sendOtp = (username="user",email,password)=>{
-//   return new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
   var mailOptions = {
     from: 'ritikrajcoder@gmail.com',
     to: email,
@@ -24,13 +24,13 @@ var transporter = nodemailer.createTransport({
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log("--->"+error);
-    //   reject(false)
+      reject(false)
     } else {
       console.log('Email sent: ' + info.response);
-    //   resolve(true)
+      resolve(true)
     }
   });
-// })
+})
 }
 
 module.exports =sendOtp
