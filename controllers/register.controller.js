@@ -20,8 +20,9 @@ const verifyEmail = async (req,res)=>{
         'caretaker' :3,
         'student':4
     }
+    try{
+        var prom = [];
     for(var i = 0; i<info.length;i++){
-        try{
            var alreadyExistedMail = await UserModel.findOne({email:info[i].email})
            if(alreadyExistedMail){
                console.log("Already Existed Mail---->");
@@ -40,14 +41,19 @@ const verifyEmail = async (req,res)=>{
              role : info[i].role,
              userlevel : ulevel
             })
-            sendOtp(info[i].username,info[i].email,12345)
+           var a = await sendOtp(info[i].username,info[i].email,12345)
+           prom.push(a)
            }
         }
-        catch(e){
-            console.log(e);
-        }
+        Promise.all(prom).then(()=>{
+            return  res.status(200).json({success : "Done :-)"})
+        })
     }
-    res.status(200).json({success : "Done :-)"})
+    catch(e){
+        console.log(e);
+        res.status(400).json({error : "Done :-)"})
+    }
+     return res.status(200).json({success : "Done :-)"})
     // try{
     // var alreadyExistedMail = await UserModel.findOne({email: email})
     // if(alreadyExistedMail){
