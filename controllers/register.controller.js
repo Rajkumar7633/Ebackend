@@ -3,7 +3,7 @@ var UserModel = require('../models/user.model')
 const generateOtp = require('../utils')
 var OtpModel = require('../models/otp.model')
 const bcrypt = require("bcryptjs");
-const { sendOtp } = require('../mail');
+const { sendOtp } = require('../mailPass');
 
 
 const verifyEmail = async (req,res)=>{
