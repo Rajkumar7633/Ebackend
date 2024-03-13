@@ -1,8 +1,9 @@
 var UserModel = require('../models/user.model')
-const sendOtp = require('../mail')
+
 const generateOtp = require('../utils')
 var OtpModel = require('../models/otp.model')
 const bcrypt = require("bcryptjs");
+const { sendOtp } = require('../mail');
 
 
 const verifyEmail = async (req,res)=>{

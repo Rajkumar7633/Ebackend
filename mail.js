@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASS
   }
 });
- const sendOtp = (username="user",email,password)=>{
+ export const sendOtp = (username="user",email,password)=>{
   return new Promise((resolve,reject)=>{
   var mailOptions = {
     from: 'ritikrajcoder@gmail.com',
@@ -32,7 +32,7 @@ var transporter = nodemailer.createTransport({
   });
 })
 }
- const sendNotice = (username="user",email,note,heading)=>{
+export const sendNotice = (username="user",email,note,heading)=>{
   console.log(email + username + note + heading)
   return new Promise((resolve,reject)=>{
     var mailOptions = {
@@ -54,4 +54,4 @@ var transporter = nodemailer.createTransport({
   })
 }
 
-module.exports = {sendOtp,sendNotice}
+// module.exports = {sendOtp,sendNotice}
