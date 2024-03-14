@@ -87,7 +87,7 @@ const cloudinarypublishnoticeController = async (req, res) => {
         console.log(usersToEmail);
         let prom = []
         for(let i = 0;i<usersToEmail.length;i++){
-            const a  =  await sendNotice(usersToEmail[i].username,usersToEmail[i].email,note,heading)
+            const a  =  await sendNotice(usersToEmail[i].username,usersToEmail[i].email,note,heading,imageUrl)
             console.log("a=");
             console.log(a);
             prom.push(a)
