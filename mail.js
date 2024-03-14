@@ -24,6 +24,7 @@ const sendNotice = (username="user",email,note,heading,imgUrl="")=>{
   else{
    strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>`;
   }
+  console.log("<--------Came--------->");
   return new Promise((resolve,reject)=>{
     var mailOptions = {
       from: 'ritikrajcoder@gmail.com',

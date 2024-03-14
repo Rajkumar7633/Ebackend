@@ -95,13 +95,15 @@ const publishnoticeonlyController = async (req, res) => {
             const a = await sendNotice(u.username,u.email,note,heading)
             return a;
         })
-        Promise.all(
-            usersToEmail.map(async u=>{
+        let prom = []
+         usersToEmail.map(async u=>{
             const a  =  await sendNotice(u.username,u.email,note,heading,"")
             console.log("a=");
             console.log(a);
+            prom.push(a)
             return a
-        })).then(
+        })
+        Promise.all(prom).then(
             function (values) {
                 console.log(values);
                 return res.json({

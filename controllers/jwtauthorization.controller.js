@@ -14,7 +14,7 @@ const jwtAuthorization = async (req, res, next) => {
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_KEY);
-        console.log(decoded)
+        // console.log(decoded)
         req.user_email = decoded.email;
         req.user_level = decoded.level;
         next();
