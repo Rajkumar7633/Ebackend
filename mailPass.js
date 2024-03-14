@@ -19,7 +19,10 @@ var transporter = nodemailer.createTransport({
     to: email,
     subject: 'Welcome to E-Suchana ',
     // text: `Your default password is ${password}`
-    html : `<h1>Hello ${username}</h1><h2>Your Default Password is ${password}</h2>`
+    html : `<h1>Hello ${username}</h1>
+    <h2>Your Login Credentials are :-</h2>
+    <h3>Your Login Id is ${email}</h3>
+    <h3>Your Default Password is ${password}</h3>`
   };
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {

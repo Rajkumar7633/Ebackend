@@ -54,7 +54,7 @@ const verifyEmail = async (req,res)=>{
     catch(e){
         console.log("------------------");
         console.log(e);
-        res.status(400).json({error : e.message})
+        return res.status(400).json({error : e.message})
     }
      return res.status(200).json({success : "Done :-)"})
     // try{

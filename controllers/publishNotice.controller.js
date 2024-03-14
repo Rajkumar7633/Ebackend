@@ -1,7 +1,7 @@
 const NmsNotices = require("../models/notice.model")
 const express = require('express');
 const userModel = require("../models/user.model");
-const { sendNotice } = require("../mail");
+const sendNotice  = require("../mail");
 
 
 
@@ -97,7 +97,7 @@ const publishnoticeonlyController = async (req, res) => {
         })
         Promise.all(
             usersToEmail.map(async u=>{
-            const a  =  await sendNotice(u.username,u.email,note,heading)
+            const a  =  await sendNotice(u.username,u.email,note,heading,"")
             console.log("a=");
             console.log(a);
             return a

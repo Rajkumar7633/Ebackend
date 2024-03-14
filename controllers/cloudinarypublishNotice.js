@@ -7,7 +7,7 @@ const path = require("path");
 const cloudinary = require('cloudinary').v2;
 const Datauri = require('datauri')
 const DatauriParser = require("datauri/parser");
-const { sendNotice } = require("../mail");
+const  sendNotice  = require("../mail");
 require('dotenv').config()
 // const app = express();
 
@@ -86,10 +86,10 @@ const cloudinarypublishnoticeController = async (req, res) => {
         )
         console.log(usersToEmail);
         Promise.all(usersToEmail.map(async u=>{
-            const a  =  sendNotice(u.username,u.email,note,heading)
+            const a  = await sendNotice(u.username,u.email,note,heading,imageUrl)
             console.log("a=");
             console.log(a);
-            return""
+            return a;
         })).then(
             res.json({
                success: "done"

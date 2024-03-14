@@ -12,15 +12,25 @@ var transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASS
   }
 });
-sendNotice = (username="user",email,note,heading)=>{
+const sendNotice = (username="user",email,note,heading,imgUrl="")=>{
   console.log(email + username + note + heading)
+  let strtext ;
+  if(imgUrl == ""){
+
+    strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>
+    <img src="${imgUrl}"> 
+    ` ;
+  }
+  else{
+   strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>`;
+  }
   return new Promise((resolve,reject)=>{
     var mailOptions = {
       from: 'ritikrajcoder@gmail.com',
       to: email,
       subject: 'E-Suchana Notice: '+heading,
       // text: `Your default password is ${password}`
-      html : `<h1>Hello ${username}</h1><h3>${note}</h3>`
+      html : strtext
     };
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
@@ -34,4 +44,4 @@ sendNotice = (username="user",email,note,heading)=>{
   })
 }
 
-module.exports = {sendNotice}
+module.exports = sendNotice
