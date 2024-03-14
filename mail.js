@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport({
   }
 });
 const sendNotice = (username="user",email,note,heading,imgUrl="")=>{
-  console.log(email + username + note + heading)
+  // console.log(email + username + note + heading)
   let strtext ;
   if(imgUrl == ""){
 
