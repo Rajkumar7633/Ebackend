@@ -96,7 +96,7 @@ const publishnoticeonlyController = async (req, res) => {
         //     return a;
         // })
         let prom = []
-        for(let i = 0;usersToEmail.length;i++){
+        for(let i = 0;i<usersToEmail.length;i++){
             const a  =  await sendNotice(usersToEmail[i].username,usersToEmail[i].email,note,heading,"")
             console.log("a=");
             console.log(a);
