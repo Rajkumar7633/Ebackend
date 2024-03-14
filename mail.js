@@ -12,10 +12,10 @@ var transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASS
   }
 });
-const sendNotice = (username="user",email,note,heading,imgUrl="")=>{
+const sendNotice = (username="user",email,note,heading,imgUrl="null")=>{
   // console.log(email + username + note + heading)
   let strtext ;
-  if(imgUrl == ""){
+  if(imgUrl == "null"){
    strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>
     <img src="${imgUrl}"> 
     ` ;
