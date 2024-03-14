@@ -16,8 +16,7 @@ const sendNotice = (username="user",email,note,heading,imgUrl="")=>{
   // console.log(email + username + note + heading)
   let strtext ;
   if(imgUrl == ""){
-
-    strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>
+   strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>
     <img src="${imgUrl}"> 
     ` ;
   }
