@@ -35,10 +35,10 @@ const cloudinarypublishnoticeController = async (req, res) => {
     })
     const time = new Date().toLocaleTimeString('en-US',
         { hour12: true, hour: "numeric", minute: "numeric" });
-    console.log(req.file.filename)
-    console.log(req.file.path);
-    console.log(__dirname + "/tmp/" + req.file.filename);
-    console.log(req.file.originalname);
+    // console.log(req.file.filename)
+    // console.log(req.file.path);
+    // console.log(__dirname + "/tmp/" + req.file.filename);
+    // console.log(req.file.originalname);
     try {
         const user = await UserModel.findOne({email:user_email})
         // const dUri = new Datauri();
@@ -85,12 +85,14 @@ const cloudinarypublishnoticeController = async (req, res) => {
             }
         )
         console.log(usersToEmail);
-        Promise.all(usersToEmail.map(async u=>{
-            const a  = await sendNotice(u.username,u.email,note,heading,imageUrl)
+        let prom = []
+        for(let i = 0;i<usersToEmail.length;i++){
+            const a  =  await sendNotice(usersToEmail[i].username,usersToEmail[i].email,note,heading)
             console.log("a=");
             console.log(a);
-            return a;
-        })).then(
+            prom.push(a)
+        }
+        Promise.all(prom).then(
             res.json({
                success: "done"
            })

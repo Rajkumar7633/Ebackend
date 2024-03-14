@@ -15,13 +15,12 @@ var transporter = nodemailer.createTransport({
 const sendNotice = (username="user",email,note,heading,imgUrl="null")=>{
   // console.log(email + username + note + heading)
   let strtext ;
+  console.log(imgUrl);
   if(imgUrl == "null"){
-   strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>
-    <img src="${imgUrl}"> 
-    ` ;
+    strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>`;
   }
   else{
-   strtext = `<h1>Hello ${username}</h1><h3>${note}</h3>`;
+    strtext = `<h1>Hello ${username}</h1><h3>${note}</h3><img src="${imgUrl}" alt="Notice Image">` ;
   }
   console.log("<--------Came--------->");
   return new Promise((resolve,reject)=>{
