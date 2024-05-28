@@ -1,7 +1,7 @@
 const NmsNotices = require("../models/notice.model")
 const express = require('express');
 const userModel = require("../models/user.model");
-const sendNotice  = require("../mail");
+const sendNotice = require("../helper/mail");
 
 
 
@@ -45,6 +45,7 @@ const publishnoticeController = async (req, res) => {
 
 }
 const publishnoticeonlyController = async (req, res) => {
+    console.log("only notice inside came -->");
     const user_email = req.user_email
     const user_level = req.user_level
     if (user_level > 2) {
@@ -61,7 +62,7 @@ const publishnoticeonlyController = async (req, res) => {
     const time = new Date().toLocaleTimeString('en-US',
         { hour12: true, hour: "numeric", minute: "numeric" });
     try {
-        const user = await userModel.findOne({email:user_email})
+        const user = await userModel.findOne({ email: user_email })
         const data = await NmsNotices.create({
             time: time,
             date: date,
@@ -70,8 +71,8 @@ const publishnoticeonlyController = async (req, res) => {
             image: null,
             note: note,
             heading: heading,
-            from : user.username+" (" + user_email+")",
-            fromdepartment : user.department
+            from: user.username + " (" + user_email + ")",
+            fromdepartment: user.department
         })
         const usersToEmail = await userModel.find(
             {
@@ -96,8 +97,8 @@ const publishnoticeonlyController = async (req, res) => {
         //     return a;
         // })
         let prom = []
-        for(let i = 0;i<usersToEmail.length;i++){
-            const a  =  await sendNotice(usersToEmail[i].username,usersToEmail[i].email,note,heading)
+        for (let i = 0; i < usersToEmail.length; i++) {
+            const a = await sendNotice(usersToEmail[i].username, usersToEmail[i].email, note, heading)
             console.log("a=");
             console.log(a);
             prom.push(a)
@@ -112,7 +113,7 @@ const publishnoticeonlyController = async (req, res) => {
         Promise.all(prom).then(
             function (values) {
                 console.log(values);
-                return res.json({success: "done"})
+                return res.json({ success: "done" })
             }
         )
     }

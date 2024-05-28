@@ -5,7 +5,7 @@ const path = require("path");
 var router = express.Router()
 
 const { v4: uuidv4 } = require('uuid');
-const jwtAuthorization = require('../controllers/jwtauthorization.controller');
+const jwtAuthorization = require('../middleware/jwtauthorization.controller');
 const cloudinarypublishnoticeController = require('../controllers/cloudinarypublishNotice');
 
 const storage = multer.diskStorage({

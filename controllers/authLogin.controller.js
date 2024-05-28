@@ -33,11 +33,11 @@ const authLogin = async (req, res) => {
         })
         return res.send({
             success: "Logged in",
-            name : user.username,
+            name: user.username,
             email: user.email,
             token: token,
             level: user.userlevel,
-            department : user.department
+            department: user.department
         })
     }
     else {

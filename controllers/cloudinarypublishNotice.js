@@ -7,7 +7,7 @@ const path = require("path");
 const cloudinary = require('cloudinary').v2;
 const Datauri = require('datauri')
 const DatauriParser = require("datauri/parser");
-const  sendNotice  = require("../mail");
+const sendNotice = require("../helper/mail");
 require('dotenv').config()
 // const app = express();
 
@@ -40,7 +40,7 @@ const cloudinarypublishnoticeController = async (req, res) => {
     // console.log(__dirname + "/tmp/" + req.file.filename);
     // console.log(req.file.originalname);
     try {
-        const user = await UserModel.findOne({email:user_email})
+        const user = await UserModel.findOne({ email: user_email })
         // const dUri = new Datauri();
         // const dataUri = req => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
         // const parser = new DatauriParser();
@@ -52,33 +52,34 @@ const cloudinarypublishnoticeController = async (req, res) => {
         // console.log(file1)
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-        const result = await cloudinary.uploader.upload(dataURI,{
+        const result = await cloudinary.uploader.upload(dataURI, {
             resource_type: "auto",
-          });
+        });
         console.log(result.url);
         const imageUrl = result.secure_url;
         const data = await NmsNotices.create({
             time: time,
             date: date,
-            level: level,
+            level: parseInt(level),
             department: department,
             image: imageUrl,
             note: note,
             heading: heading,
-            from : user.username+" (" + user_email+")",
-            fromdepartment : user.department
+            from: user.username + " (" + user_email + ")",
+            fromdepartment: user.department
         })
         const usersToEmail = await UserModel.find(
             {
-                $and:[
-                    {   $or:[
-                            {department : "admin"},
-                            {department : department}
+                $and: [
+                    {
+                        $or: [
+                            { department: "admin" },
+                            { department: department }
                         ]
                     },
                     {
-                        userlevel : {
-                            $lte : level
+                        userlevel: {
+                            $lte: level
                         }
                     }
                 ]
@@ -86,16 +87,16 @@ const cloudinarypublishnoticeController = async (req, res) => {
         )
         console.log(usersToEmail);
         let prom = []
-        for(let i = 0;i<usersToEmail.length;i++){
-            const a  =  await sendNotice(usersToEmail[i].username,usersToEmail[i].email,note,heading,imageUrl)
+        for (let i = 0; i < usersToEmail.length; i++) {
+            const a = await sendNotice(usersToEmail[i].username, usersToEmail[i].email, note, heading, imageUrl)
             console.log("a=");
             console.log(a);
             prom.push(a)
         }
         Promise.all(prom).then(
             res.json({
-               success: "done"
-           })
+                success: "done"
+            })
         )
     }
     catch (err) {
