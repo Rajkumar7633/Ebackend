@@ -8,7 +8,7 @@
     <h3 align="center">Backend of "E-Suchana : The Notice Management System"</h3>
 </p>
 <p align="center">
-	<img src="https://img.shields.io/github/license/raj4477/nms?style=flat&color=0080ff" alt="license">
+	<img src="https://img.shields.io/github/license/raj4477/nms?style=flat&color=0080ff" alt="my-license">
 	<img src="https://img.shields.io/github/last-commit/raj4477/nms?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
 	<img src="https://img.shields.io/github/languages/top/raj4477/nms?style=flat&color=0080ff" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/raj4477/nms?style=flat&color=0080ff" alt="repo-language-count">
