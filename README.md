@@ -222,14 +222,6 @@ node index.js
 
 ---
 
-## 🛠 Project Roadmap
-
-- [X] `► INSERT-TASK-1`
-- [ ] `► INSERT-TASK-2`
-- [ ] `► ...`
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
@@ -277,6 +269,6 @@ This project is protected under the [MIT](https://choosealicense.com/licenses/mi
 
 - List any resources, contributors, inspiration, etc. here.
 
-[**Return**](#-nms)
+[**Return**](#-quick-links)
 
 ---
