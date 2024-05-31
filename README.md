@@ -34,8 +34,6 @@
 > - [🚀 Getting Started](#-getting-started)
 >   - [⚙️ Installation](#️-installation)
 >   - [🤖 Running nms](#-running-nms)
->   - [🧪 Tests](#-tests)
-> - [🛠 Project Roadmap](#-project-roadmap)
 > - [🤝 Contributing](#-contributing)
 > - [📄 License](#-license)
 > - [👏 Acknowledgments](#-acknowledgments)
@@ -44,10 +42,11 @@
 
 ## 📍 Overview
 
-<code><b>E-suchana</b> is devised to serve as a centralized platform for managing notices efficiently.
-E-suchana represents a paradigm shift in the way notices are managed and circulated within organizational settings.
-By leveraging cutting-edge technologies such as Next.js for frontend development and Node.js, Express.js, and MongoDB for backend infrastructure, the platform ensures seamless performance and scalability.
-</code>
+
+> <strong>E-suchana</strong> is devised to serve as a centralized platform for managing notices efficiently.
+> E-suchana represents a paradigm shift in the way notices are managed and circulated within organizational settings.
+> By leveraging cutting-edge technologies such as Next.js for frontend development and Node.js, Express.js, and MongoDB for backend infrastructure, the platform ensures seamless performance and scalability.
+
 
 ---
 
@@ -58,7 +57,7 @@ By leveraging cutting-edge technologies such as Next.js for frontend development
 <code>► Automated Mailing System</code><br>
 <code>► Notice Published in Hierarchical Level</code><br>
 <code>► JsonWebToken Authentication</code><br>
-<code>► Secured Routes</code><br>
+<code>► Secure Routes</code><br>
 
 ---
 
@@ -267,7 +266,8 @@ This project is protected under the [MIT](https://choosealicense.com/licenses/mi
 
 ## 👏 Acknowledgments
 
-- List any resources, contributors, inspiration, etc. here.
+- [Cloudinary.com](https://cloudinary.com//)
+- [Vercel.com](https://vercel.com/)
 
 [**Return**](#-quick-links)
 
